@@ -177,7 +177,11 @@
         document.getElementById("browserFrame").src = src;
         document.getElementById("browserFrame").style.display = "block";
         document.getElementById("content").style.display = "none";
-
+<header>
+  <input type="text" id="urlInput" placeholder="Введите сайт, например: wikipedia.org">
+  <button onclick="goToUrl()">Перейти</button>
+  <button onclick="toggleTheme()">🌗 Тема</button>
+</header>
         tabs.forEach(tab => {
           if (tab.innerText.includes(src) || tab.innerText.includes("Сайт")) {
             tab.classList.add('active-tab');
