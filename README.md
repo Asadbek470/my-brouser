@@ -127,10 +127,9 @@
 
   <div class="tabs">
     <div class="tab active-tab" onclick="loadTab('home')">🏠 Главная</div>
-    <div class="tab" onclick="loadTab('https://instagram.com')">🌐 Сайт 1</div>
-    <div class="tab" onclick="loadTab('https://gmail.com')">🔎 Сайт 2</div>
+    <div class="tab" onclick="loadTab('https://openai.com')">🌐 Сайт 1</div>
+    <div class="tab" onclick="loadTab('https://https://t.me/vseproittecnologii.com')">🔎 Сайт 2</div>
     <div class="tab" onclick="loadTab('https://wikipedia.org')">📚 Сайт 3</div>
-    <div class="tab" onclick="loadTab('https://www.youtube.com/)">📚 Сайт 4</div>
   </div>
 
   <div id="content" style="flex-grow: 1; overflow: auto;">
