@@ -1,195 +1,207 @@
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Мой браузер</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Браузер "Реки"</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #121212, #1e1e1e);
-      color: #fff;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
 
-    header {
-      background-color: #222;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.6) blur(3px);
+            z-index: -1;
+            animation: background-zoom 20s infinite alternate;
+        }
 
-    input[type="text"] {
-      flex: 1;
-      padding: 8px;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-    }
+        @keyframes background-zoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
 
-    button {
-      padding: 8px 16px;
-      font-size: 16px;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            transform: perspective(1000px) rotateX(10deg);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
 
-    button:hover {
-      background-color: #45a049;
-    }
+        .container:hover {
+            transform: perspective(1000px) rotateX(0deg);
+        }
 
-    .tabs {
-      display: flex;
-      background: #111;
-      padding: 10px 20px;
-      gap: 15px;
-    }
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3em;
+            color: #ffffff;
+            text-shadow: 0 0 15px #00aaff, 0 0 25px #00aaff;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            transform-style: preserve-3d;
+            animation: text-pop 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+        }
 
-    .tab {
-      cursor: pointer;
-      padding: 8px 12px;
-      background: #333;
-      border-radius: 6px;
-      transition: 0.3s;
-    }
+        @keyframes text-pop {
+            0% { transform: translateZ(0); }
+            50% { transform: translateZ(20px); }
+            100% { transform: translateZ(0); }
+        }
 
-    .tab:hover {
-      background: #555;
-    }
+        .search-bar {
+            width: 500px;
+            max-width: 90%;
+            display: flex;
+            border-radius: 25px;
+            overflow: hidden;
+            background-color: rgba(44, 44, 44, 0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-    .active-tab {
-      background: #4CAF50;
-    }
+        .search-bar input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            background-color: transparent;
+            color: #e0e0e0;
+        }
 
-    iframe {
-      flex-grow: 1;
-      width: 100%;
-      border: none;
-    }
+        .search-bar button {
+            border: none;
+            background-color: #0077b6;
+            color: #e0e0e0;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .welcome {
-      padding: 30px;
-      text-align: center;
-      background: radial-gradient(circle, #333, #111);
-    }
+        .search-bar button:hover {
+            background-color: #00b4d8;
+        }
 
-    .gallery {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 30px;
-      flex-wrap: wrap;
-    }
+        .links {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
 
-    .card {
-      background: #1a1a1a;
-      border-radius: 12px;
-      overflow: hidden;
-      width: 300px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s;
-    }
+        .link-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
 
-    .card:hover {
-      transform: translateY(-10px);
-    }
+        .link-item:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
 
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
+        .link-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 2px solid #00aaff;
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.5);
+        }
 
-    .card p {
-      padding: 15px;
-      color: #ccc;
-    }
-  </style>
+        .link-item span {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #a0a0a0;
+            text-shadow: 1px 1px 2px #000;
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <input type="text" id="urlInput" placeholder="Введите сайт, например: wikipedia.org">
-    <button onclick="goToUrl()">Перейти</button>
-  </header>
+    <div class="container">
+        <h1>Браузер "Реки"</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Поиск в Google, YouTube или Telegram...">
+            <button onclick="performSearch()">Искать</button>
+        </div>
 
-  <div class="tabs">
-    <div class="tab active-tab" onclick="loadTab('home')">🏠 Главная</div>
-    <div class="tab" onclick="loadTab('https://openai.com')">🌐 Сайт 1</div>
-    <div class="tab" onclick="loadTab('https://https://t.me/vseproittecnologii.com')">🔎 Сайт 2</div>
-    <div class="tab" onclick="loadTab('https://wikipedia.org')">📚 Сайт 3</div>
-  </div>
-
-  <div id="content" style="flex-grow: 1; overflow: auto;">
-    <div class="welcome">
-      <h1>Добро пожаловать в мой браузер</h1>
-      <p>Здесь вы можете посещать сайты и наслаждаться красивым интерфейсом!</p>
+        <div class="links">
+            <a href="https://www.google.com" class="link-item">
+                <img src="https://www.google.com/s2/favicons?domain=google.com" alt="Google">
+                <span>Google</span>
+            </a>
+            <a href="https://www.youtube.com" class="link-item">
+                <img src="https://www.google.com/s2/favicons?domain=youtube.com" alt="YouTube">
+                <span>YouTube</span>
+            </a>
+            <a href="https://www.instagram.com" class="link-item">
+                <img src="https://www.google.com/s2/favicons?domain=instagram.com" alt="Instagram">
+                <span>Instagram</span>
+            </a>
+            <a href="https://web.telegram.org" class="link-item">
+                <img src="https://www.google.com/s2/favicons?domain=telegram.org" alt="Telegram">
+                <span>Telegram</span>
+            </a>
+        </div>
     </div>
 
-    <div class="gallery">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db" alt="City">
-        <p>Современный стиль 3D города.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1581093588401-1b99f9a7b144" alt="Sky">
-        <p>Природа и закат в объёмной перспективе.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1618221199486-a40c3d59c2f8" alt="Code">
-        <p>Веб-разработка и кодинг в стиле 3D.</p>
-      </div>
-    </div>
-  </div>
+    <script>
+        function performSearch() {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                // Если пользователь ищет на YouTube или Telegram, перенаправляем туда
+                if (query.toLowerCase().includes('youtube')) {
+                    window.location.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+                } else if (query.toLowerCase().includes('telegram')) {
+                    window.location.href = `https://web.telegram.org/a/#?q=${encodeURIComponent(query)}`;
+                } else {
+                    // В остальных случаях ищем в Google
+                    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                }
+            }
+        }
 
-  <iframe id="browserFrame" style="display: none;"></iframe>
-
-  <script>
-    function goToUrl() {
-      let input = document.getElementById("urlInput").value.trim();
-      if (!input.startsWith("http://") && !input.startsWith("https://")) {
-        input = "https://" + input;
-      }
-      loadTab(input);
-    }
-
-    function loadTab(src) {
-      const tabs = document.querySelectorAll('.tab');
-      tabs.forEach(t => t.classList.remove('active-tab'));
-      
-      if (src === 'home') {
-        document.getElementById("content").style.display = "block";
-        document.getElementById("browserFrame").style.display = "none";
-        tabs[0].classList.add('active-tab');
-      } else {
-        document.getElementById("browserFrame").src = src;
-        document.getElementById("browserFrame").style.display = "block";
-        document.getElementById("content").style.display = "none";
-<header>
-  <input type="text" id="urlInput" placeholder="Введите сайт, например: wikipedia.org">
-  <button onclick="goToUrl()">Перейти</button>
-  <button onclick="toggleTheme()">🌗 Тема</button>
-</header>
-        tabs.forEach(tab => {
-          if (tab.innerText.includes(src) || tab.innerText.includes("Сайт")) {
-            tab.classList.add('active-tab');
-          }
+        document.getElementById('searchInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
         });
-      }
-    }
-  </script>
+    </script>
 
 </body>
 </html>
